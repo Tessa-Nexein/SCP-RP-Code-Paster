@@ -62,13 +62,18 @@ def type_line(text):
     time.sleep(0.05)
 
 def wait_for_enter():
-    print("Press Enter to send next line...")
+    print("Press Enter to send next line or Esc to stop...")
     while True:
         if kb.is_pressed("enter"):
             while kb.is_pressed("enter"):
                 time.sleep(0.05)
-            break
+            return True  # Continue to next line
+        if kb.is_pressed("esc"):
+            while kb.is_pressed("esc"):
+                time.sleep(0.05)
+            return False  # Signal to stop
         time.sleep(0.05)
+
 
 def main():
     print("Roblox Line Paster\n")
@@ -106,7 +111,10 @@ def main():
         if not switch_to_roblox():
             break
         type_line(line)
-        wait_for_enter()
+        if not wait_for_enter():
+            print("Program Stopped (Esc pressed).")
+            break
+
 
     print("\nAll lines sent!")
 
