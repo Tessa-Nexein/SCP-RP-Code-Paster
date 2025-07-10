@@ -122,7 +122,3 @@ python main.py
 - Change `start_hotkey` or `command_line_key` in the script to match your own setup.
 - Add more automation like "auto-send after delay" if needed.
 
----
-
-## 📃 License
-
