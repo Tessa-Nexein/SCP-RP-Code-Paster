@@ -70,7 +70,7 @@ This reads your clipboard and uses it instead of a file.
 
 - **`F10`** = Start pasting lines (can be changed in the code)
 - **`Enter`** = Proceed to next line
-- **`Esc`** = Exit the program  _(Not added yet)_
+- **`Esc`** = Exit the program
 
 The script presses the SCP:RP's **Command Line Key** (`á` by default) before typing each line. You can change this key if needed in the script:
 ```python
