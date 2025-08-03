@@ -57,7 +57,7 @@ A simple Python Script for SCP:RP Morphers to Morph Roleplayers with easy and sa
 - **`Enter`** = Proceed to next line
 - **`Esc`** = Exit the program
 
-The script presses the SCP:RP's **Command Line Key** (` \` ` by default) before typing each line. You can change this key if needed in the script:
+The script presses the SCP:RP's **Command Line Key** ( ` by default) before typing each line. You can change this key if needed in the script:
 ```python
 command_line_key = '`'
 ```
