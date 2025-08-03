@@ -20,7 +20,7 @@ A simple Python Script for SCP:RP Morphers to Morph Roleplayers with easy and sa
 
 1. **Install Python**: [https://python.org](https://python.org)
 
-2. Download Code Paster
+2. **Download Code Paster**
 
 3. **Install dependencies** using the terminal:
    ```bash
