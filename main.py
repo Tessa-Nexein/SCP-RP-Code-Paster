@@ -1,19 +1,26 @@
-import sys
 import pygetwindow as gw
 import keyboard as kb
 import time
 import pyperclip
 from pynput.keyboard import Key, Controller
 from pywinauto import Application
-import os
+import requests
 
-# -------------- CONFIG --------------
+url = "https://raw.githubusercontent.com/Tessa-Nexein/SCP-RP-Codes/refs/heads/main/commands.json"
+response = requests.get(url)
+scp_rp_cmd_list = response.json()
 
-default_file = "example.txt"        # Change to "clipboard" for clipboard mode
+banned_args = ["me", "all"]  # Arguments that are not allowed in commands
+
+
+# --------------- OPTIONS ---------------
+
+auto_enter = False                # If True, Automatically press Enter after each command (Might cause issues with Roblox)
 start_hotkey = "f10"              # Hotkey to begin pasting
 command_line_key = 'á'            # Command Line key to open SCP:RP's Command Line
+display_press_enter = True        # If True, it will display "Press Enter to send next line or Esc to stop..." after each command (Set to false if it bothers you)
 
-# ------------------------------------
+# ---------------------------------------
 
 keyboard_ctrl = Controller()
 
@@ -33,36 +40,26 @@ def switch_to_roblox():
         print(f"Error switching to Roblox: {e}")
         return False
 
-def read_file_lines(filename):
-    try:
-        with open(f"codes/{filename}", "r", encoding="utf-8") as f:
-            return [line.strip() for line in f if line.strip()]
-    except FileNotFoundError:
-        print(f"File not found: codes/{filename}")
-        return []
-
-def save_clipboard_to_file():
-    content = pyperclip.paste()
-    os.makedirs("codes", exist_ok=True)
-    with open("codes/clipboard.txt", "w", encoding="utf-8") as f:
-        f.write(content)
-    return "clipboard.txt"
-
-def type_line(text):
+def type_command(command):
     kb.press(command_line_key)
     kb.release(command_line_key)
     time.sleep(0.05)
     kb.press("backspace")
     kb.release("backspace")
 
-    if text.startswith(":"): text = text[1:]  # Remove leading colon if present
-
     time.sleep(0.05)
-    keyboard_ctrl.type(text)
+    keyboard_ctrl.type(command)
     time.sleep(0.05)
 
 def wait_for_enter():
-    print("Press Enter to send next line or Esc to stop...")
+    if display_press_enter or not auto_enter: print("Press Enter to send next line or Esc to stop...\n")
+
+    if auto_enter:
+        time.sleep(0.5)
+        kb.press("enter")
+        kb.release("enter")
+        return True
+    
     while True:
         if kb.is_pressed("enter"):
             while kb.is_pressed("enter"):
@@ -74,49 +71,59 @@ def wait_for_enter():
             return False  # Signal to stop
         time.sleep(0.05)
 
+def is_valid_command(command):
+    if command.strip() == "":
+        return False
+
+    if command.startswith(":"):
+        command = command[1:]
+            
+    if command.endswith(",") or command.endswith("&"):
+        command = command[:-1]
+
+    if command.split()[0] not in scp_rp_cmd_list:
+        print(f"[1;31m# ! > Command '{command.split()[0]}' Command not found in SCP:RP Morphing Commands List. Skipping...\n[0m")
+        return False
+    
+    if command.split(" ")[1] in banned_args:
+        print(f"[1;31m# ! > Command '{command}' contains '{command.split()[1]}', which is not allowed. Skipping...\n[0m")
+        return False
+    
+    return command
+
 
 def main():
-    print("Roblox Line Paster\n")
+    print("> Roblox Line Paster\n")
 
-    # Check if a command-line argument was passed
-    if len(sys.argv) > 1:
-        selected = sys.argv[1].strip()
-        print(f"Using argument: {selected}")
-    else:
-        user_input = input(f"Enter filename (or press Enter to use '{default_file}'): ").strip()
-        selected = user_input if user_input else default_file
-
-    # Handle clipboard mode
-    if selected.lower() == "clipboard":
-        print("Clipboard mode selected. Waiting for hotkey...")
-        filename = "clipboard.txt"
-    else:
-        if selected.endswith(".txt"):
-            filename = selected
-        else:
-            filename = f"{selected}.txt"
-
-    print(f"Press {start_hotkey.upper()} to start or ESC to cancel.\n")
-    kb.wait(start_hotkey)
-
-    if selected.lower() == "clipboard":
-        filename = save_clipboard_to_file()
-
-    lines = read_file_lines(filename)
-    if not lines:
-        return
-
-    for i, line in enumerate(lines):
-        print(f"[{i+1}/{len(lines)}] {line}")
+    while True:
+        print(f"Press {start_hotkey.upper()} to Start Pasting from your Clipboard.\n")
+        kb.wait(start_hotkey)
         if not switch_to_roblox():
-            break
-        type_line(line)
-        if not wait_for_enter():
-            print("Program Stopped (Esc pressed).")
-            break
+            print("Failed to switch to Roblox. Exiting.")
+            return
 
+        lines = pyperclip.paste().splitlines()
+        if not lines:
+            return
+        lines = [line for line in lines if line.strip() != ""]
 
-    print("\nAll lines sent!")
+        for i, line in enumerate(lines):
+            command = is_valid_command(line)
+            if command == False:
+                continue
+
+            print(f"[{i+1}/{len(lines)}] {command}")
+            if not switch_to_roblox():
+                break
+
+            type_command(command)
+
+            if not wait_for_enter():
+                print("Program Stopped (Esc pressed).")
+                break
+
+        print("Morphing finished!")
+        print("\n------------------------------\n")
 
 
 if __name__ == "__main__":
