@@ -1,3 +1,5 @@
+# Made by: Nexein ☆
+
 import pygetwindow as gw
 import keyboard as kb
 import time
@@ -93,7 +95,7 @@ def is_valid_command(command):
 
 
 def main():
-    print("> Roblox Line Paster\n")
+    print("> SCP:RP Line Paster (Morphing Edition) by Nexein☆\n")
 
     while True:
         print(f"Press {start_hotkey.upper()} to Start Pasting from your Clipboard.\n")
