@@ -20,20 +20,22 @@ A simple Python Script for SCP:RP Morphers to Morph Roleplayers with easy and sa
 
 1. **Install Python**: [https://python.org](https://python.org)
 
-2. **Install dependencies** using the terminal:
+2. Download Code Paster
+
+3. **Install dependencies** using the terminal:
    ```bash
    pip install pygetwindow pywinauto keyboard pyperclip pynput requests
    ```
 
-3. **(Optional) Configure the `main.py`**
+4. **(Optional) Configure the `main.py`**
    
    1) Double Click `main.py` to edit it
    2) Configure the Program as you want in the `OPTIONS` Section
    3) Save by either pressing `CTRL + S` or press `Save` manually
 
-4. **Move the already provided `Shortcut` file to your Desktop**
+5. **Move the already provided `Shortcut` file to your Desktop**
 
-5. **Start the Code Paster with the Shortcut**
+6. **Start the Code Paster with the Shortcut**
 
 ---
 
