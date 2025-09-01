@@ -8,7 +8,7 @@ from pynput.keyboard import Key, Controller
 from pywinauto import Application
 import requests
 
-url = "https://raw.githubusercontent.com/Tessa-Nexein/SCP-RP-Codes/refs/heads/main/commands.json"
+url = "https://raw.githubusercontent.com/Tessa-Nexein/SCP-RP-Morph-Codes/refs/heads/main/commands.json"
 response = requests.get(url)
 scp_rp_cmd_list = response.json()
 
