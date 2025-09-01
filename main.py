@@ -82,6 +82,10 @@ def is_valid_command(command):
             
     if command.endswith(",") or command.endswith("&"):
         command = command[:-1]
+    
+    if command.split[0] == "run":
+        print("[1;33m# ! > 'run' Command detected. Skipping... (Not supported)\n[0m")
+        return False
 
     if command.split()[0] not in scp_rp_cmd_list:
         print(f"[1;31m# ! > Command '{command.split()[0]}' Command not found in SCP:RP Morphing Commands List. Skipping...\n[0m")
@@ -89,10 +93,6 @@ def is_valid_command(command):
     
     if command.split(" ")[1] in banned_args:
         print(f"[1;31m# ! > Command '{command}' contains '{command.split()[1]}', which is not allowed. Skipping...\n[0m")
-        return False
-    
-    if command.split[0] == "run":
-        print("[1;33m# ! > 'run' Command detected. Skipping... (Not supported)\n[0m")
         return False
     
     return command
