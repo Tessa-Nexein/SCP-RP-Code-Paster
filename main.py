@@ -91,6 +91,10 @@ def is_valid_command(command):
         print(f"[1;31m# ! > Command '{command}' contains '{command.split()[1]}', which is not allowed. Skipping...\n[0m")
         return False
     
+    if command.split[0] == "run":
+        print("[1;33m# ! > 'run' Command detected. Skipping... (Not supported)\n[0m")
+        return False
+    
     return command
 
 
@@ -104,10 +108,12 @@ def main():
             print("Failed to switch to Roblox. Exiting.")
             return
 
-        lines = pyperclip.paste().splitlines()
+        lines_raw = pyperclip.paste().splitlines()
         if not lines:
             return
-        lines = [line for line in lines if line.strip() != ""]
+        lines = [part.strip() 
+                for line in lines_raw if line.strip() 
+                for part in line.split("&") if part.strip()]
 
         for i, line in enumerate(lines):
             command = is_valid_command(line)
