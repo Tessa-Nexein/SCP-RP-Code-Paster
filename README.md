@@ -19,10 +19,8 @@ A simple Python Script for SCP:RP Roleplayers who need to frequently Morph peopl
 ## Setup Instructions
 
 1. **Install Python**: [https://python.org](https://python.org)
-2. **Install dependencies** using the terminal:
-   ```bash
-   pip install pygetwindow pywinauto keyboard pyperclip pynput
-   ```
+
+2. **Download Code Paster**
 
 3. **Folder structure** (create manually if needed):
    ```
@@ -31,6 +29,26 @@ A simple Python Script for SCP:RP Roleplayers who need to frequently Morph peopl
    └── codes/
        └── example.txt  # or other text files
    ```
+
+
+4. **Install dependencies** using the terminal:
+   ```bash
+   pip install pygetwindow pywinauto keyboard pyperclip pynput requests
+   ```
+
+5. **(Optional) Configure the `main.py`**
+   
+   1) Double Click `main.py` to edit it
+   2) Configure the Program as you want in the `OPTIONS` Section
+   3) Save by either pressing `CTRL + S` or press `Save` manually
+
+6. **(Optional) Setup up the Shortcuts**
+
+   1) Make a copy of the `example.bat` file
+   2) Edit the bat file by `R-Click`ing it then pressing `Edit in Notepad` 
+   3) Change `"example.txt"` to any file you want or to `"clipboard"`
+   4) Exit and make a Shortcut file for it by `R-Click`ing it then pressing `Show more options` and `Create shortcut`
+   5) Move the Shortcut to your Desktop
 
 ---
 
@@ -79,46 +97,20 @@ command_line_key = 'á'
 
 ---
 
-## Creating a Shortcut with `.bat`
-
-You can create a `.bat` file to launch it quickly with or without a parameter.
-
-### Example 1: Use Clipboard
-```bat
-@echo off
-cd /d "C:\path\to\your\script"
-python main.py clipboard
-```
-
-### Example 2: Use Specific File
-```bat
-@echo off
-cd /d "C:\path\to\your\script"
-python main.py myscript.txt
-```
-
-### Example 3: Prompt-based Start (No Args)
-```bat
-@echo off
-cd /d "C:\path\to\your\script"
-python main.py
-```
-
-> **Save the above as `start.bat`**, and double-click it to run.
-
----
-
 ## ⚠️ Notes
 
 - Make sure Roblox is **already running** and not minimized.
 - If Roblox runs as **Administrator**, you must run this script as Administrator too.
-- Lines are typed one at a time — after each, **press Enter** to continue.
+- Lines are typed one at a time, after each, **press Enter** to continue.
 - Make sure your `codes/` folder exists or is auto-created.
 
 ---
 
 ## Customization Tips
 
-- Change `start_hotkey` or `command_line_key` in the script to match your own setup.
-- Add more automation like "auto-send after delay" if needed.
+- Change `START_HOTKEY` or `COMMAND_LINE_KEY` in the script to match your own setup.
+- Enable `AUTO_ENTER` and you will not need to press Enter manually.
+- Change `DEFAULT_FILE` to your most commonly used Codes.
+- Enable `REPEAT_FOR_CLIPBOARD` if you need to Paste from your Clipboard frequently
+- Disable `PRESS_ENTER_MESSAGE` if you are already familiar on how to use the Program. 
 
